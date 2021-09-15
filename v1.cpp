@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/09/15 17:26:55 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/09/15 21:56:06 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,24 @@ void    v1::reduceform()
     std::cout << "Reduced form: \"";
     for (size_t i = 0; i < _mReduce.size(); i++)
     {
-        if (i != 0 && _mReduce[i].first >= 0)
+        if (i != 0 && _mReduce[i].first > 0)
             std::cout << "+ ";
-        else if (i != 0 && _mReduce[i].first <= 0)
+        else if (i != 0 && _mReduce[i].first < 0)
         {
             std::cout << "- ";
             if (_mReduce[i].first != 0)
                 _mReduce[i].first *= -1;
-        } 
+        }
+        else if (i != 0 && _mReduce[i].first == 0)
+        {
+            if (1/(_mReduce[i].first) == 1/(-0.0))
+            {
+                std::cout << "- ";
+                _mReduce[i].first *= -1;
+            }
+            else
+                std::cout << "+ ";
+        }
         std::cout << _mReduce[i].first << " ";
         std::cout << "* X^";
         std::cout << _mReduce[i].second << " ";
@@ -119,7 +129,7 @@ void    v1::setnbr(std::string const &str, float n)
 void    v1::find_token(std::string const & str)
 {
     bool sign = false;
-    for(std::string::const_iterator it = str.begin(); *it != '\0'; it++)
+    for(std::string::const_iterator it = str.begin(); it != str.end(); it++)
     {
         if (*it == '=')
             sign = true;
@@ -145,7 +155,7 @@ std::string::const_iterator v1::store_diget(std::string::const_iterator it, bool
         n *= -1;
     str = this->find_degree(it);
     setnbr(str, n);
-    return it;
+    return --it;
 }
 
 v1::~v1()
