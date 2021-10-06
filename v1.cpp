@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/09/15 21:56:06 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/06 13:07:50 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@ v1::v1()
 }
 
 v1::v1(std::string str)
-    : _mStr(str), _mDegree(0), _mA(0), _mB(0), _mC(0)
+    : _mStr(str)
 {
+    _mForm.A =0; _mForm.B =0; _mForm.C =0; _mForm.D =0; _mForm.Degree =0; 
+     
     this->find_token(_mStr);
     this->print();
-    this->solution();
+    if (_mForm.Degree < 3 && _mForm.Degree > 0)
+        this->solution();
+    else if (_mForm.Degree == 0)
+        std::cout << "The degree of zero polynomial is undefined" << std::endl;
+    else
+        std::cout << "The polynomial degree is strictly greater than 2, I can't solve." << std::endl;
 }
 
 v1::v1(v1 const & other)
@@ -32,25 +39,40 @@ v1::v1(v1 const & other)
 v1 v1::operator=(v1 const & other)
 {
     _mStr = other._mStr;
-    _mDegree = other._mDegree;
+    _mForm.Degree = other._mForm.Degree;
     return *this;
 }
+
+void    v1::square_root()
+{
+    float i = 0.000001;
+
+    for (; i*i < _mForm.D; i = i + 0.000001);
+
+    if (_mForm.D > 0)
+        std::cout << "Discriminant is strictly positive, the two solutions are:\n"
+        << ((-_mForm.B) - i) / (2 * _mForm.A) << std::endl
+        << ((-_mForm.B) + i) / (2 * _mForm.A) << std::endl;
+    else if (_mForm.D >= 0)
+        std::cout << "The solution is:\n" << ((-_mForm.B) + i) / (2 * _mForm.A) << std::endl;
+    else
+        std::cout << "There is no solution" << std::endl;
+}
+
 
 void    v1::print()
 {
 
     this->reduceform();
-    std::cout << "Polynomial degree: " << _mDegree << std::endl;
+    std::cout << "Polynomial degree: " << _mForm.Degree << std::endl;
 }
 
 void    v1::solution()
 {
-    if (_mDegree > 2)
-    {
-        std::cout << "The polynomial degree is strictly greater than 2, I can't solve." << std::endl;
-        return ;
-    }
-    std::cout << "the solution is" << std::endl;
+    if (_mForm.Degree == 1)
+        std::cout << "The solution is: " << _mForm.C / (_mForm.B * -1) << std::endl;
+    else
+        this->square_root();
 }
 
 
@@ -95,8 +117,8 @@ std::string    v1::find_degree(std::string::const_iterator & it)
         str += *it;
         it++;
     }
-    if (atof(str.c_str()) > _mDegree)
-        _mDegree = atof(str.c_str());
+    if (atof(str.c_str()) > _mForm.Degree)
+        _mForm.Degree = atof(str.c_str());
     return str;
 }
 
@@ -118,11 +140,11 @@ void    v1::setnbr(std::string const &str, float n)
     if (_mReduce.size() == 0)
         _mReduce.push_back(make_pair(n, str));
     if (atof(str.c_str()) == 0)
-        _mC += n;
+        _mForm.C += n;
     else if (atof(str.c_str()) == 1)
-        _mB += n;
+        _mForm.B += n;
     else if (atof(str.c_str()) == 2)
-        _mA += n;
+        _mForm.A += n;
 }
 
 
