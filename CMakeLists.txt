@@ -6,7 +6,7 @@
 #    By: eutrodri <eutrodri@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 13:24:45 by eutrodri      #+#    #+#                  #
-#    Updated: 2021/10/08 23:03:42 by eutrodri      ########   odam.nl          #
+#    Updated: 2021/10/08 23:13:06 by eutrodri      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ set(Headers
 set(Sources
     main.cpp)
 
-add_subdirectory(googletest/gtest)
+add_subdirectory(ThirdParty/gtest)
 
 #add_library(computor STATIC ${Sources} ${Headers})
 
