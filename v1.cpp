@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/06 13:07:50 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/11 17:42:25 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,9 @@ v1::v1(std::string str)
     _mForm.A =0; _mForm.B =0; _mForm.C =0; _mForm.D =0; _mForm.Degree =0; 
      
     this->find_token(_mStr);
-    this->print();
+    this->print_reduce_degree();
     if (_mForm.Degree < 3 && _mForm.Degree > 0)
         this->solution();
-    else if (_mForm.Degree == 0)
-        std::cout << "The degree of zero polynomial is undefined" << std::endl;
-    else
-        std::cout << "The polynomial degree is strictly greater than 2, I can't solve." << std::endl;
 }
 
 v1::v1(v1 const & other)
@@ -43,36 +39,46 @@ v1 v1::operator=(v1 const & other)
     return *this;
 }
 
-void    v1::square_root()
+float    v1::square_root()
 {
-    float i = 0.000001;
+    float i = 0.0;
 
     for (; i*i < _mForm.D; i = i + 0.000001);
 
-    if (_mForm.D > 0)
-        std::cout << "Discriminant is strictly positive, the two solutions are:\n"
-        << ((-_mForm.B) - i) / (2 * _mForm.A) << std::endl
-        << ((-_mForm.B) + i) / (2 * _mForm.A) << std::endl;
-    else if (_mForm.D >= 0)
-        std::cout << "The solution is:\n" << ((-_mForm.B) + i) / (2 * _mForm.A) << std::endl;
-    else
-        std::cout << "There is no solution" << std::endl;
+    return (i);
 }
 
 
-void    v1::print()
+void    v1::print_reduce_degree()
 {
 
     this->reduceform();
     std::cout << "Polynomial degree: " << _mForm.Degree << std::endl;
+    if (_mForm.Degree == 0)
+        std::cout << "The degree of zero polynomial is undefined" << std::endl;
+    else if (_mForm.Degree > 2)
+        std::cout << "The polynomial degree is strictly greater than 2, I can't solve." << std::endl;
 }
 
 void    v1::solution()
 {
+    float   sqr;
     if (_mForm.Degree == 1)
         std::cout << "The solution is: " << _mForm.C / (_mForm.B * -1) << std::endl;
     else
-        this->square_root();
+    {
+        _mForm.D = (_mForm.B * _mForm.B) - 4 * _mForm.A * _mForm.C; 
+        
+        sqr = this->square_root();
+        if (_mForm.D > 0)
+            std::cout << "Discriminant is strictly positive, the two solutions are:\n"
+                << ((-_mForm.B) - sqr) / (2 * _mForm.A) << std::endl
+                << ((-_mForm.B) + sqr) / (2 * _mForm.A) << std::endl;
+        else if (_mForm.D >= 0)
+            std::cout << "The solution is:\n" << ((-_mForm.B) + sqr) / (2 * _mForm.A) << std::endl;
+    else
+        std::cout << "There is no solution" << std::endl;
+    }
 }
 
 
@@ -179,6 +185,27 @@ std::string::const_iterator v1::store_diget(std::string::const_iterator it, bool
     setnbr(str, n);
     return --it;
 }
+
+float&   v1::get_A(){
+    return (_mForm.A);
+}
+
+float&   v1::get_B(){
+    return (_mForm.B);
+}
+
+float&   v1::get_C(){
+    return (_mForm.C);
+}
+
+float&   v1::get_D(){
+    return (_mForm.D);
+}
+
+int     v1::get_Degree(){
+    return (_mForm.Degree);
+}
+
 
 v1::~v1()
 {

@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:08:34 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/06 11:14:19 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/11 17:38:26 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,21 @@ public:
 
     v1  operator=(v1 const & other);
     
-    void    print();
+    void    print_reduce_degree();
     void    reduceform();
     std::string    find_degree(std::string::const_iterator & it);
     void    find_token(std::string const & str);
     std::string::const_iterator store_diget(std::string::const_iterator it, bool sign);
     void    setnbr(std::string const &str, float n);
     void    solution();
-    void    square_root();
+    float   square_root();
+    
+    
+    float&  get_A();
+    float&  get_B();
+    float&  get_C();
+    float&  get_D();
+    int     get_Degree();
 
 
 
