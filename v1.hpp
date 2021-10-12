@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:08:34 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/11 17:38:26 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/12 17:26:02 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ public:
     void    setnbr(std::string const &str, float n);
     void    solution();
     float   square_root();
+    float   square_root(float d);
     
     
     float&  get_A();

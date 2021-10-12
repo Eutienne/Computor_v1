@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/11 17:42:25 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/12 20:12:18 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,23 @@ float    v1::square_root()
 
     for (; i*i < _mForm.D; i = i + 0.000001);
 
+    return (i);
+}
+
+float    v1::square_root(float d)
+{
+    float i = 0.0;
+    for (; i*i <= d; i++){
+        if (i*i == d)
+            return i;
+    }
+
+    for (;i*i > d; i = i - 0.1);
+    for (; i*i < d; i = i + 0.01);
+    for (; i*i > d; i = i - 0.001);
+    for (; i*i < d; i = i + 0.0001);
+    for (; i*i > d; i = i - 0.00001);
+ 
     return (i);
 }
 
