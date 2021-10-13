@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:08:34 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/12 17:26:02 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/13 18:20:06 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 
 struct ABCD
 {
-    float   A, B, C, D;
+    float   A, B, C;
+    long double D;
     int     Degree;
+    float   solution1, solution2;
 };
 
 
@@ -34,22 +36,31 @@ public:
 
     v1  operator=(v1 const & other);
     
-    void    print_reduce_degree();
+    // void    print_reduce_degree();
+    void    print();
     void    reduceform();
     std::string    find_degree(std::string::const_iterator & it);
     void    find_token(std::string const & str);
     std::string::const_iterator store_diget(std::string::const_iterator it, bool sign);
     void    setnbr(std::string const &str, float n);
-    void    solution();
-    float   square_root();
-    float   square_root(float d);
+    // void    solution();
+    // float   square_root();
+    // long double   square_root(long double d);
     
     
-    float&  get_A();
-    float&  get_B();
-    float&  get_C();
-    float&  get_D();
-    int     get_Degree();
+    void    setSolution();
+    void    setSolution(float f);
+    void    setD();
+
+
+    
+    float&          get_A();
+    float&          get_B();
+    float&          get_C();
+    long double&    get_D();
+    int             get_Degree();
+    float&          get_solution1();
+    float&          get_solution2();
 
 
 
@@ -60,5 +71,8 @@ private:
     std::string _mStr;
     std::vector<std::pair<float, std::string> > _mReduce;
     ABCD        _mForm;
+    void    setSolution1(float f);
+    void    setSolution2(float f);
+    void    print2();
 };
 #endif

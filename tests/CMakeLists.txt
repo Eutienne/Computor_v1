@@ -19,16 +19,18 @@ project(computor_test)
 
 
 set(Sources
+    test_computor.cpp
     test.cpp)
 
 # add the executable
 add_executable(computor_test ${Sources})
 
-target_link_libraries(computor_test PUBLIC
-    gtest_main
-)
+
 
 add_test(
     NAME computor_test
     COMMAND computor_test
+)
+target_link_libraries(computor_test PUBLIC 
+    computor_lib gtest_main
 )

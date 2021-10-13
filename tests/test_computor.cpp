@@ -6,12 +6,12 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/08 21:08:57 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/11 14:51:01 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/13 13:44:15 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <gtest/gtest.h>
-#include "../v1.hpp"
+#include "../header/v1.hpp"
 
 TEST(test_computor, string)
 {

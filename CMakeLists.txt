@@ -12,15 +12,15 @@
 
 cmake_minimum_required(VERSION 3.16.0)
 
-set(CMAKE_CXX_STANDARD 14)
-
 # set the project name
 project(computor)
 
+set(CMAKE_CXX_STANDARD 14)
+
 # add the executable
 add_executable(computor 
-    main.cpp
-    v1.cpp)
+    src/main.cpp
+    src/v1.cpp)
     
 target_link_libraries(computor PUBLIC
     -pedantic)
@@ -29,13 +29,15 @@ target_link_libraries(computor PUBLIC
 enable_testing()
 
 set(Headers
-    v1.hpp)
+    header/v1.hpp)
 
 set(Sources
-    main.cpp)
+    src/main.cpp
+    src/v1.cpp)
+
+add_subdirectory(tests)
 
 add_subdirectory(ThirdParty/gtest)
 
-#add_library(computor STATIC ${Sources} ${Headers})
+add_library(computor_lib STATIC ${Sources} ${Headers})
 
-add_subdirectory(tests)
