@@ -6,11 +6,35 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/13 18:19:56 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/15 13:24:27 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/v1.hpp"
+
+long double    square_root(long double d)
+{
+    long double i = 0.0;
+    for (; i*i <= d; i++){
+        if (i*i == d)
+            return i;
+    }
+
+    for (long double j = i + 0.1;i*i > d && i != j; j = i, i = i - 0.1);
+    for (long double j = i - 0.01; i*i < d && i != j; j = i, i = i + 0.01);
+    for (long double j = i + 0.001; i*i > d && i != j; j = i, i = i - 0.001);
+    for (long double j = i - 0.0001; i*i < d && i != j; j = i, i = i + 0.0001);
+    for (long double j = i + 0.00001; i*i > d && i != j; j = i, i = i - 0.00001);
+    for (long double j = i - 0.000001; i*i < d && i != j; j = i, i = i + 0.000001);
+    for (long double j = i + 0.0000001; i*i > d && i != j; j = i, i = i - 0.0000001);
+    for (long double j = i - 0.00000001; i*i < d && i != j; j = i, i = i + 0.00000001);
+    for (long double j = i + 0.000000001; i*i > d && i != j; j = i, i = i - 0.000000001);
+    for (long double j = i - 0.0000000001; i*i < d && i != j; j = i, i = i + 0.0000000001);
+    for (long double j = i + 0.00000000001; i*i > d && i != j; j = i, i = i - 0.00000000001);
+ 
+    return (i);
+}
+
 
 v1::v1()
 {
@@ -42,46 +66,14 @@ v1 v1::operator=(v1 const & other)
     return *this;
 }
 
-// float    v1::square_root()
-// {
-//     float i = 0.0;
-
-//     for (; i*i < _mForm.D; i = i + 0.000001);
-
-//     return (i);
-// }
-
-// long double    v1::square_root(long double d)
-// {
-//     long double i = 0.0;
-//     for (; i*i <= d; i++){
-//         if (i*i == d)
-//             return i;
-//     }
-
-//     for (long double j = i + 0.1;i*i > d && i != j; j = i, i = i - 0.1);
-//     for (long double j = i - 0.01; i*i < d && i != j; j = i, i = i + 0.01);
-//     for (long double j = i + 0.001; i*i > d && i != j; j = i, i = i - 0.001);
-//     for (long double j = i - 0.0001; i*i < d && i != j; j = i, i = i + 0.0001);
-//     for (long double j = i + 0.00001; i*i > d && i != j; j = i, i = i - 0.00001);
-//     for (long double j = i - 0.000001; i*i < d && i != j; j = i, i = i + 0.000001);
-//     for (long double j = i + 0.0000001; i*i > d && i != j; j = i, i = i - 0.0000001);
-//     for (long double j = i - 0.00000001; i*i < d && i != j; j = i, i = i + 0.00000001);
-//     for (long double j = i + 0.000000001; i*i > d && i != j; j = i, i = i - 0.000000001);
-//     for (long double j = i - 0.0000000001; i*i < d && i != j; j = i, i = i + 0.0000000001);
-//     for (long double j = i + 0.00000000001; i*i > d && i != j; j = i, i = i - 0.00000000001);
- 
-//     return (i);
-// }
-
 void    v1::print2()
 {
     if (_mForm.D > 0)
             std::cout << "Discriminant is strictly positive, the two solutions are:\n"
-                << get_solution1() << std::endl
-                << get_solution2() << std::endl;
+                << getSolution1() << std::endl
+                << getSolution2() << std::endl;
         else if (_mForm.D >= 0)
-            std::cout << "The solution is:\n" << get_solution1() << std::endl;
+            std::cout << "The solution is:\n" << getSolution1() << std::endl;
     else
         std::cout << "There is no solution" << std::endl;
 }
@@ -90,15 +82,15 @@ void    v1::print2()
 void    v1::print()
 {
     this->reduceform();
-    std::cout << "Polynomial degree: " << get_Degree() << std::endl;
+    std::cout << "Polynomial degree: " << getDegree() << std::endl;
 
-    switch (get_Degree())
+    switch (getDegree())
     {
     case 0:
         std::cout << "The degree of zero polynomial is undefined" << std::endl;
         break;
     case 1:
-        std::cout << "The solution is: " << get_solution1() << std::endl;
+        std::cout << "The solution is: \n" << getSolution1() << std::endl;
         break;
     case 2:
         print2();
@@ -108,38 +100,6 @@ void    v1::print()
         break;
     }
 }
-
-// void    v1::print_reduce_degree()
-// {
-//     this->reduceform();
-//     std::cout << "Polynomial degree: " << _mForm.Degree << std::endl;
-//     if (_mForm.Degree == 0)
-//         std::cout << "The degree of zero polynomial is undefined" << std::endl;
-//     else if (_mForm.Degree > 2)
-//         std::cout << "The polynomial degree is strictly greater than 2, I can't solve." << std::endl;
-// }
-
-// void    v1::solution()
-// {
-//     float   sqr;
-//     if (_mForm.Degree == 1)
-//         std::cout << "The solution is: " << _mForm.C / (_mForm.B * -1) << std::endl;
-//     else
-//     {
-//         _mForm.D = (_mForm.B * _mForm.B) - 4 * _mForm.A * _mForm.C; 
-        
-//         sqr = this->square_root();
-//         if (_mForm.D > 0)
-//             std::cout << "Discriminant is strictly positive, the two solutions are:\n"
-//                 << ((-_mForm.B) - sqr) / (2 * _mForm.A) << std::endl
-//                 << ((-_mForm.B) + sqr) / (2 * _mForm.A) << std::endl;
-//         else if (_mForm.D >= 0)
-//             std::cout << "The solution is:\n" << ((-_mForm.B) + sqr) / (2 * _mForm.A) << std::endl;
-//     else
-//         std::cout << "There is no solution" << std::endl;
-//     }
-// }
-
 
 void    v1::reduceform()
 {
@@ -245,32 +205,32 @@ std::string::const_iterator v1::store_diget(std::string::const_iterator it, bool
     return --it;
 }
 
-float&   v1::get_A(){
+float&   v1::getA(){
     return (_mForm.A);
 }
 
-float&   v1::get_B(){
+float&   v1::getB(){
     return (_mForm.B);
 }
 
-float&   v1::get_C(){
+float&   v1::getC(){
     return (_mForm.C);
 }
 
-long double&   v1::get_D(){
+long double&   v1::getD(){
     return (_mForm.D);
 }
 
-int     v1::get_Degree(){
+int     v1::getDegree(){
     return (_mForm.Degree);
 }
 
-float& v1::get_solution1()
+float& v1::getSolution1()
 {
     return (_mForm.solution1);
 }
 
-float& v1::get_solution2()
+float& v1::getSolution2()
 {
     return (_mForm.solution2);
 }

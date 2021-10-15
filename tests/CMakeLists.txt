@@ -20,7 +20,10 @@ project(computor_test)
 
 set(Sources
     test_computor.cpp
-    test.cpp)
+    test.cpp
+    test_setters.cpp
+    test_getters.cpp
+    test_find.cpp)
 
 # add the executable
 add_executable(computor_test ${Sources})
