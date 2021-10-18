@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:14:29 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/15 14:18:48 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/18 17:02:26 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ TEST(Setters, D)
     V.setD();
     ASSERT_EQ(V.getD(), (V.getB() * V.getB()) - 4 * V.getA() * V.getC());
 }
-
-
-
 
 TEST(Setters, solution)
 {
