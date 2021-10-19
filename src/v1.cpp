@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/15 13:24:27 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/19 18:49:40 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,15 @@ v1::v1(std::string str)
     : _mStr(str)
 {
     _mForm.A =0; _mForm.B =0; _mForm.C =0; _mForm.D =0; _mForm.Degree =0; _mForm.solution1 =0; _mForm.solution2 =0; 
-     
-    this->find_token(_mStr);
+    try
+    {
+        this->find_token(_mStr);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        exit(-1);
+    } 
 }
 
 v1::v1(v1 const & other)
@@ -134,16 +141,33 @@ void    v1::reduceform()
 std::string    v1::find_degree(std::string::const_iterator & it)
 {
     std::string str;
-    while (*it != '^')
-        it++;
-    it++;
-    while (isdigit(*it))
+    for (int i = 0; *it == ' ' || *it == '*'; it++)
     {
-        str += *it;
-        it++;
+        if (*it == '*')
+            i++;
+        if (i > 1)
+            throw std::runtime_error("ERROR: to mutch '*' sign");
     }
-    if (atof(str.c_str()) > _mForm.Degree)
-        _mForm.Degree = atof(str.c_str());
+    if (*it == 'x' || *it == 'X')
+    {
+        it++;
+        if (*it && *it == '^')
+        {
+            it++;
+            if (*it == '-')
+                throw std::runtime_error("ERROR: Cant have a negative power!");
+            else if (*it == '.')
+                throw std::runtime_error("ERROR: Cant have a float as power!");
+            for (;isdigit(*it); it++)
+                str += *it;
+        }
+        else if ((!*it) || *it == ' ')
+            str = "1";
+        else
+            throw std::runtime_error("ERROR: Wrong Format");
+    }
+    else
+        return "0";
     return str;
 }
 
@@ -178,10 +202,17 @@ void    v1::find_token(std::string const & str)
     bool sign = false;
     for(std::string::const_iterator it = str.begin(); it != str.end(); it++)
     {
-        if (*it == '=')
+        if (!*it)
+            return ;
+        if (*it == '=' && sign == false)
             sign = true;
-        if (isdigit(*it) || *it == '-')
+        else if (*it == '=' && sign == true)
+            throw std::runtime_error("ERROR: can't have 2 times a '=' sign ");
+        if (isdigit(*it) || *it == '-' || *it == 'x' || *it == 'X')
             it = store_diget(it, sign);
+        else if (!(*it == ' ' || *it == '+' || *it == '='))
+            throw std::runtime_error("ERROR: Wrong Format");
+
     }
 }
 
@@ -193,15 +224,22 @@ std::string::const_iterator v1::store_diget(std::string::const_iterator it, bool
     if (*it == '-')
     {
         str += '-';
-        it += 2;
+        for (; !isdigit(*it); it++);
     }
+    if (*it == 'x' || *it == 'X')
+        str =+ '1';
     for (;isdigit(*it) || *it == '.'; it++)
         str += *it;
     n = atof(str.c_str());
     if (sign == true)
         n *= -1;
     str = this->find_degree(it);
-    setnbr(str, n);
+    if (n != 0)
+    {
+        if (atof(str.c_str()) > _mForm.Degree)
+            _mForm.Degree = atof(str.c_str());
+        setnbr(str, n);
+    }
     return --it;
 }
 
@@ -243,12 +281,12 @@ void    v1::setD()
 
 void    v1::setSolution1(float f)
 {
-    _mForm.solution1 = f;
+    _mForm.solution1 = f == 0? 0 : f;
 }
 
 void    v1::setSolution2(float f)
 {
-    _mForm.solution2 = f;
+    _mForm.solution2 = f == 0? 0 : f;
 }
 
 void    v1::setSolution()
