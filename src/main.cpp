@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:05:32 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/19 20:04:22 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/20 16:59:02 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,33 @@ void all_spaces(std::string const & s)
       if( *it != ' ' )
         return ;
    }
-   throw std::runtime_error("ERROR: ALL whitespaces");
+   throw std::runtime_error("Error: ALL whitespaces");
 }
 
 void    checker(std::string const & s)
 {
+    int i = 0, point = 0;
+    
     try{
+        if (s.empty())
+            throw std::runtime_error("Error: empty string! B");
         all_spaces(s);
-        // for(std::string::const_iterator it = s.begin(); it != s.end(); it++)
-        // {
 
-
-        // }
+        for(std::string::const_iterator it = s.begin(); it != s.end(); it++)
+        {
+            if (*it == '.' && ((!isdigit(*(it +1))) || (!isdigit(*(it -1)))))
+                throw std::runtime_error("Error: Wrong Format a");
+            else if (*it == '.')
+                point++;
+            if (*it == '=')
+                i++;
+            if (*it == ' ')
+                point = 0;
+            if (point > 1)
+                throw std::runtime_error("Error: Wrong Format Point");
+        }
+        if (i != 1)
+            throw std::runtime_error("Error: Wrong Format");
     }
     catch(const std::exception& e)
     {
@@ -55,9 +70,11 @@ int main(int argc, char** argv)
         try
         {
             V.setD();
-            sqr = square_root(V.getD());
             if (V.getD() >= 0)
+            {
+                sqr = square_root(V.getD());
                 V.setSolution(sqr);
+            }
         }
         catch(const std::exception& e)
         {

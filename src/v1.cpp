@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/19 18:49:40 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/20 20:02:42 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ void    v1::print()
     this->reduceform();
     std::cout << "Polynomial degree: " << getDegree() << std::endl;
 
+    if (_mForm.A == 0 && _mForm.B == 0 && _mForm.C == 0 && getDegree() < 3)
+    {
+        std::cout << "Every real number is a solution" << std::endl;
+        return ; 
+    }
+
     switch (getDegree())
     {
     case 0:
@@ -133,7 +139,7 @@ void    v1::reduceform()
         }
         std::cout << _mReduce[i].first << " ";
         std::cout << "* X^";
-        std::cout << _mReduce[i].second << " ";
+        std::cout << atoi(_mReduce[i].second.c_str()) << " ";
     }
     std::cout << "= 0\"" << std::endl;
 }
@@ -175,7 +181,7 @@ void    v1::setnbr(std::string const &str, float n)
 {
     for (size_t i = 0; i < _mReduce.size(); i++)
     {
-        if (_mReduce[i].second == str)
+        if (atoi(_mReduce[i].second.c_str()) == atoi(str.c_str()))
         {
             _mReduce[i].first += n;
             break ;
