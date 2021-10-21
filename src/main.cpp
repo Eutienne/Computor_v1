@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:05:32 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/21 18:05:12 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/21 21:13:40 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void    checker(std::string const & s)
     
     try{
         if (s.empty())
-            throw std::runtime_error("Error: empty string! B");
+            throw std::runtime_error("Error: empty string!");
         all_spaces(s);
 
         for(std::string::const_iterator it = s.begin(); it != s.end(); it++)
         {
             if (*it == '.' && ((!isdigit(*(it +1))) || (!isdigit(*(it -1)))))
-                throw std::runtime_error("Error: Wrong Format a");
+                throw std::runtime_error("Error: Wrong Format");
             else if (*it == '.')
                 point++;
             if (*it == '=')
@@ -42,7 +42,7 @@ void    checker(std::string const & s)
             if (*it == ' ')
                 point = 0;
             if (point > 1)
-                throw std::runtime_error("Error: Wrong Format Point");
+                throw std::runtime_error("Error: Wrong Format");
         }
         if (i != 1)
             throw std::runtime_error("Error: Wrong Format");

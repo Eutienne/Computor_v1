@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/21 18:24:54 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/21 21:13:18 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void    v1::print2()
         std::cout << "x = " << _mForm.B << " - " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
         std::cout << "x = " << _mForm.B << " + " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
     }
-        // std::cout << "There is no solution" << std::endl;
 }
 
 
@@ -159,7 +158,7 @@ std::string    v1::find_degree(std::string::const_iterator & it)
         if (*it == '*')
             i++;
         if (i > 1)
-            throw std::runtime_error("ERROR: to mutch '*' sign");
+            throw std::runtime_error("Error: to mutch '*' sign");
     }
     if (*it == 'x' || *it == 'X')
     {
@@ -168,16 +167,16 @@ std::string    v1::find_degree(std::string::const_iterator & it)
         {
             it++;
             if (*it == '-')
-                throw std::runtime_error("ERROR: Cant have a negative power!");
+                throw std::runtime_error("Error: Cant have a negative power!");
             else if (*it == '.')
-                throw std::runtime_error("ERROR: Cant have a float as power!");
+                throw std::runtime_error("Error: Cant have a float as power!");
             for (;isdigit(*it); it++)
                 str += *it;
         }
         else if ((!*it) || *it == ' ')
             str = "1";
         else
-            throw std::runtime_error("ERROR: Wrong Format");
+            throw std::runtime_error("Error: Wrong Format");
     }
     else
         return "0";
@@ -220,11 +219,11 @@ void    v1::find_token(std::string const & str)
         if (*it == '=' && sign == false)
             sign = true;
         else if (*it == '=' && sign == true)
-            throw std::runtime_error("ERROR: can't have 2 times a '=' sign ");
+            throw std::runtime_error("Error: can't have 2 times a '=' sign ");
         if (isdigit(*it) || *it == '-' || *it == 'x' || *it == 'X')
             it = store_diget(it, sign);
         else if (!(*it == ' ' || *it == '+' || *it == '='))
-            throw std::runtime_error("ERROR: Wrong Format");
+            throw std::runtime_error("Error: Wrong Format");
 
     }
 }
