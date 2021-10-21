@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/20 20:02:42 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/21 18:24:54 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ v1::v1()
 v1::v1(std::string str)
     : _mStr(str)
 {
-    _mForm.A =0; _mForm.B =0; _mForm.C =0; _mForm.D =0; _mForm.Degree =0; _mForm.solution1 =0; _mForm.solution2 =0; 
+    _mForm.A =0; _mForm.B =0; _mForm.C =0; _mForm.D =0; _mForm.sqr =0; 
+    _mForm.Degree =0; _mForm.solution1 =0; _mForm.solution2 =0; 
     try
     {
         this->find_token(_mStr);
@@ -68,6 +69,7 @@ v1 v1::operator=(v1 const & other)
     _mForm.B = other._mForm.B;
     _mForm.C = other._mForm.C;
     _mForm.D = other._mForm.D;
+    _mForm.D = other._mForm.sqr;
     _mForm.solution1 = other._mForm.solution1;
     _mForm.solution2 = other._mForm.solution2;
     return *this;
@@ -82,7 +84,12 @@ void    v1::print2()
         else if (_mForm.D >= 0)
             std::cout << "The solution is:\n" << getSolution1() << std::endl;
     else
-        std::cout << "There is no solution" << std::endl;
+    {
+        _mForm.B = _mForm.B == 0 ? 0 : (-_mForm.B) / (2 * _mForm.A);
+        std::cout << "x = " << _mForm.B << " - " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
+        std::cout << "x = " << _mForm.B << " + " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
+    }
+        // std::cout << "There is no solution" << std::endl;
 }
 
 
@@ -269,6 +276,12 @@ int     v1::getDegree(){
     return (_mForm.Degree);
 }
 
+float&  v1::getSqr()
+{
+    return (_mForm.sqr);
+}
+
+
 float& v1::getSolution1()
 {
     return (_mForm.solution1);
@@ -283,6 +296,11 @@ float& v1::getSolution2()
 void    v1::setD()
 {
     _mForm.D = (_mForm.B * _mForm.B) - 4 * _mForm.A * _mForm.C;
+}
+
+void    v1::setSqr()
+{
+    _mForm.sqr = getD() >=0 ? square_root(getD()) : square_root(getD() * -1);
 }
 
 void    v1::setSolution1(float f)

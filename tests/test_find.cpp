@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/19 10:12:56 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/19 10:18:27 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/20 20:23:46 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ TEST(Find, Degree)
     std::string::const_iterator it = str.begin();
     v1  V(str);
 
+    it++;
     ASSERT_EQ(V.find_degree(it), "3");
 }

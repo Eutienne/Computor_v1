@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:08:34 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/19 12:35:22 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/21 17:30:21 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 struct ABCD
 {
-    float   A, B, C;
+    float   A, B, C, sqr;
     long double D;
     int     Degree;
     float   solution1, solution2;
@@ -46,11 +46,13 @@ public:
     void                        setSolution();
     void                        setSolution(float f);
     void                        setD();
+    void                        setSqr();
 
     float&                      getA();
     float&                      getB();
     float&                      getC();
     long double&                getD();
+    float&                      getSqr();
     int                         getDegree();
     float&                      getSolution1();
     float&                      getSolution2();

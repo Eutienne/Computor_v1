@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:05:32 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/20 16:59:02 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/21 18:05:12 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ int main(int argc, char** argv)
         try
         {
             V.setD();
+            V.setSqr();
             if (V.getD() >= 0)
-            {
-                sqr = square_root(V.getD());
-                V.setSolution(sqr);
-            }
+                V.setSolution(V.getSqr());            
         }
         catch(const std::exception& e)
         {
