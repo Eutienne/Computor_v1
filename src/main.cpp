@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:05:32 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/21 21:13:40 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/21 21:27:30 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void    checker(std::string const & s)
 int main(int argc, char** argv)
 {
     if (argc != 2)
+    {
+        std::cout << "usage: ./computor [arg1]\narg1: '5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0'\n";
         return 0;
+    }
     checker(argv[1]);
     v1  V(argv[1]);
     float   sqr;
