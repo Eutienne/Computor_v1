@@ -6,7 +6,7 @@
 /*   By: eutrodri <eutrodri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/10 23:15:25 by eutrodri      #+#    #+#                 */
-/*   Updated: 2021/10/21 21:13:18 by eutrodri      ########   odam.nl         */
+/*   Updated: 2021/10/22 12:59:07 by eutrodri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ long double    square_root(long double d)
         if (i*i == d)
             return i;
     }
-
     for (long double j = i + 0.1;i*i > d && i != j; j = i, i = i - 0.1);
     for (long double j = i - 0.01; i*i < d && i != j; j = i, i = i + 0.01);
     for (long double j = i + 0.001; i*i > d && i != j; j = i, i = i - 0.001);
@@ -31,7 +30,7 @@ long double    square_root(long double d)
     for (long double j = i + 0.000000001; i*i > d && i != j; j = i, i = i - 0.000000001);
     for (long double j = i - 0.0000000001; i*i < d && i != j; j = i, i = i + 0.0000000001);
     for (long double j = i + 0.00000000001; i*i > d && i != j; j = i, i = i - 0.00000000001);
- 
+
     return (i);
 }
 
@@ -78,16 +77,30 @@ v1 v1::operator=(v1 const & other)
 void    v1::print2()
 {
     if (_mForm.D > 0)
-            std::cout << "Discriminant is strictly positive, the two solutions are:\n"
-                << getSolution1() << std::endl
-                << getSolution2() << std::endl;
-        else if (_mForm.D >= 0)
-            std::cout << "The solution is:\n" << getSolution1() << std::endl;
+        std::cout << "Discriminant is strictly positive, the two solutions are:\n"
+            << getSolution1() << std::endl
+            << getSolution2() << std::endl;
+    else if (_mForm.D >= 0)
+        std::cout << "Discriminant is 0, The solution is:\n" << getSolution1() << std::endl;
     else
     {
-        _mForm.B = _mForm.B == 0 ? 0 : (-_mForm.B) / (2 * _mForm.A);
-        std::cout << "x = " << _mForm.B << " - " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
-        std::cout << "x = " << _mForm.B << " + " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
+        _mForm.B = (-_mForm.B) / (2 * _mForm.A);
+        std::cout << "Discriminant is strictly negative, the two complex solutions are:" << std::endl;
+        if (_mForm.B == 0 && getSqr() / (2 * _mForm.A) == 1)
+            std::cout << "x = -i\n" << "x =  i" << std::endl;
+        else if (_mForm.B == 0)
+        {
+            std::cout << "x = " <<  -1 * (getSqr() / (2 * _mForm.A)) << "i" << std::endl;
+            std::cout << "x = " << getSqr() / (2 * _mForm.A) << "i" << std::endl;
+        }
+        else
+        {
+            getSqr() / (2 * _mForm.A) > 0 ?
+            std::cout << "x = " << _mForm.B << " - " << getSqr() / (2 * _mForm.A) << "i" << std::endl
+            << "x = " << _mForm.B << " + " << getSqr() / (2 * _mForm.A) << "i" << std::endl :
+            std::cout << "x = " << _mForm.B << " - " << -1 * (getSqr() / (2 * _mForm.A)) << "i" << std::endl
+            << "x = " << _mForm.B << " + " << -1 * (getSqr() / (2 * _mForm.A)) << "i" << std::endl;
+        }
     }
 }
 
@@ -147,6 +160,8 @@ void    v1::reduceform()
         std::cout << "* X^";
         std::cout << atoi(_mReduce[i].second.c_str()) << " ";
     }
+    if (_mReduce.size() == 0)
+        std::cout << "0 * X^0 ";
     std::cout << "= 0\"" << std::endl;
 }
 
@@ -236,7 +251,11 @@ std::string::const_iterator v1::store_diget(std::string::const_iterator it, bool
     if (*it == '-')
     {
         str += '-';
-        for (; !isdigit(*it); it++);
+        for (; !isdigit(*it); it++)
+        {
+            if (*it == '*' || *it == '=' || *it == 'x' || *it == 'X')
+                throw std::runtime_error("Error: Wrong format");
+        }
     }
     if (*it == 'x' || *it == 'X')
         str =+ '1';
